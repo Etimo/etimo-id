@@ -9,7 +9,6 @@ namespace Etimo.Id.Service
 {
     public class UnlockUserService : IUnlockUserService
     {
-        private readonly IApplicationRepository _applicationRepository;
         private readonly ICreateAuditLogService _createAuditLogService;
         private readonly IRequestContext        _requestContext;
         private readonly IUserRepository        _userRepository;

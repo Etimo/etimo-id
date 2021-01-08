@@ -123,17 +123,6 @@ namespace Etimo.Id.Api.Users
             return Ok(found);
         }
 
-        [HttpPut]
-        [Route("/users/{userId:guid}/unlock")]
-        [Authorize(Policy = UserScopes.Write)]
-        public async Task<IActionResult> UnlockAsync([FromRoute] Guid userId)
-        {
-            if (this.UserHasScope(UserScopes.Admin) || userId == this.GetUserId()) { await _unlockUserService.UnlockAsync(userId); }
-            else { throw new ForbiddenException(); }
-
-            return Ok();
-        }
-
         [HttpPost]
         [Route("/users")]
         [ValidateModel]
@@ -179,6 +168,17 @@ namespace Etimo.Id.Api.Users
             IEnumerable<RoleResponseDto> added = roles.Select(r => RoleResponseDto.FromRole(r, false));
 
             return Ok(added);
+        }
+
+        [HttpPut]
+        [Route("/users/{userId:guid}/unlock")]
+        [Authorize(Policy = UserScopes.Write)]
+        public async Task<IActionResult> UnlockAsync([FromRoute] Guid userId)
+        {
+            if (this.UserHasScope(UserScopes.Admin) || userId == this.GetUserId()) { await _unlockUserService.UnlockAsync(userId); }
+            else { throw new ForbiddenException(); }
+
+            return Ok();
         }
 
         [HttpDelete]

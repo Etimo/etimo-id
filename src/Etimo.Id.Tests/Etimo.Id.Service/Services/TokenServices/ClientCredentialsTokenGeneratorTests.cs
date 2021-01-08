@@ -50,7 +50,7 @@ namespace Etimo.Id.Tests.Etimo.Id.Service.Services.TokenServices
         }
 
         [Fact]
-        public void GenerateTokenAsync_Validation_Throws_InvalidClientException_When_ClientId_Is_Empty()
+        public void GenerateTokenAsync_When_ClientId_Is_Empty_Validation_Throws_InvalidClientException()
         {
             // Arrange
             ClientCredentialsTokenRequest request = GetRequest();
@@ -62,7 +62,7 @@ namespace Etimo.Id.Tests.Etimo.Id.Service.Services.TokenServices
         }
 
         [Fact]
-        public void GenerateTokenAsync_Validation_Throws_InvalidClientException_When_ClientSecret_Is_Null()
+        public void GenerateTokenAsync_When_ClientSecret_Is_Null_Validation_Throws_InvalidClientException()
         {
             // Arrange
             ClientCredentialsTokenRequest request = GetRequest();
@@ -74,7 +74,7 @@ namespace Etimo.Id.Tests.Etimo.Id.Service.Services.TokenServices
         }
 
         [Fact]
-        public void GenerateTokenAsync_Validation_Throws_UnauthorizedClientException_When_Application_Is_Public()
+        public void GenerateTokenAsync_When_Application_Is_Public_Validation_Throws_UnauthorizedClientException()
         {
             // Arrange
             Application application = GetApplication();
@@ -88,7 +88,7 @@ namespace Etimo.Id.Tests.Etimo.Id.Service.Services.TokenServices
 
         [Fact]
         public void
-            GenerateTokenAsync_Validation_Throws_UnsupportedGrantTypeException_When_Application_Is_Not_Allowing_ClientCredentialsGrant()
+            GenerateTokenAsync_When_Application_Is_Not_Allowing_ClientCredentialsGrant_Validation_Throws_UnsupportedGrantTypeException()
         {
             // Arrange
             Application application = GetApplication();
@@ -102,7 +102,7 @@ namespace Etimo.Id.Tests.Etimo.Id.Service.Services.TokenServices
 
         [Fact]
         public void
-            GenerateTokenAsync_Validation_Throws_InvalidGrantException_When_Credentials_Is_In_Body_And_Application_Is_Not_Supporting_That()
+            GenerateTokenAsync_When_Credentials_Is_In_Body_And_Application_Is_Not_Supporting_That_Validation_Throws_InvalidGrantException()
         {
             // Arrange
             ClientCredentialsTokenRequest request = GetRequest();
@@ -142,7 +142,7 @@ namespace Etimo.Id.Tests.Etimo.Id.Service.Services.TokenServices
         }
 
         [Fact]
-        public async Task GenerateTokenAsync_Dont_Generate_RefreshToken_When_Thats_Not_Enabled_For_The_Application()
+        public async Task GenerateTokenAsync_When_Refreshtokens_Is_Disabled_For_The_Application_Refreshtoken_Is_Not_Generated()
         {
             // Arrange
             Application application = GetApplication();
@@ -165,7 +165,7 @@ namespace Etimo.Id.Tests.Etimo.Id.Service.Services.TokenServices
         }
 
         [Fact]
-        public async Task GenerateTokenAsync_Generate_RefreshToken_When_Thats_Enabled_For_The_Application()
+        public async Task GenerateTokenAsync_When_Refreshtokens_Is_Disabled_For_The_Application_RefreshToken_Is_Generated()
         {
             // Arrange
             Application application = GetApplication();
@@ -275,7 +275,7 @@ namespace Etimo.Id.Tests.Etimo.Id.Service.Services.TokenServices
                 AllowClientCredentialsGrant = true,
                 AccessTokenLifetimeMinutes  = AccessTokenLifetimeMinutes,
                 UserId                      = DummyUserId,
-                User = new User()
+                User = new User
                 {
                     Username = DummyUsername,
                 },

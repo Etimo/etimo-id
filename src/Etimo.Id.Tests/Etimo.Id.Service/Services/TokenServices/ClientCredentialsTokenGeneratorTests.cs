@@ -19,6 +19,7 @@ namespace Etimo.Id.Tests.Etimo.Id.Service.Services.TokenServices
         private const int    ApplicationId              = 666;
         private const string DummySecret                = "DummySecret";
         private const string DummyScope                 = "DummyScope";
+        private const string DummyUsername              = "DummyUsername";
 
         private readonly Mock<IAccessTokenRepository>     _accessTokenRepositoryMock;
         private readonly Mock<IAuthenticateClientService> _authenticateClientServiceMock;
@@ -132,6 +133,7 @@ namespace Etimo.Id.Tests.Etimo.Id.Service.Services.TokenServices
                 Audience        = new List<string> { DummyClientId.ToString() },
                 ClientId        = DummyClientId,
                 Subject         = DummyUserId.ToString(),
+                Username        = DummyUsername,
                 Scope           = DummyScope,
                 LifetimeMinutes = AccessTokenLifetimeMinutes,
             };
@@ -273,6 +275,10 @@ namespace Etimo.Id.Tests.Etimo.Id.Service.Services.TokenServices
                 AllowClientCredentialsGrant = true,
                 AccessTokenLifetimeMinutes  = AccessTokenLifetimeMinutes,
                 UserId                      = DummyUserId,
+                User = new User()
+                {
+                    Username = DummyUsername,
+                },
             };
 
         private void AuthenticateAsyncReturns(Application application)

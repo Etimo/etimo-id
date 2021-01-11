@@ -20,8 +20,8 @@ namespace Etimo.Id.Client
     {
         public static void UseEtimoId(this IServiceCollection services)
         {
-            IConfiguration?   configuration = services.BuildServiceProvider().GetService<IConfiguration>();
-            IHostEnvironment? environment   = services.BuildServiceProvider().GetService<IHostEnvironment>();
+            IConfiguration   configuration = services.BuildServiceProvider().GetService<IConfiguration>();
+            IHostEnvironment environment   = services.BuildServiceProvider().GetService<IHostEnvironment>();
 
             var etimoIdSettings = new EtimoIdSettings();
             configuration.GetSection("EtimoIdSettings").Bind(etimoIdSettings);

@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Net.Http;
 using System.Reflection;
@@ -16,6 +17,7 @@ using System.Text;
 
 namespace Etimo.Id.Client
 {
+    [ExcludeFromCodeCoverage]
     public static class EtimoIdConfiguration
     {
         public static void UseEtimoId(this IServiceCollection services)

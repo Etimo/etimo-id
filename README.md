@@ -36,7 +36,7 @@ You should **REALLY** change the Secret value in your production environment.
 
 ## Setting up database
 
-Start the database server by typing `docker-compose up -d`
+Start the database server by typing `docker-compose -f docker-compose.db.yml up -d`
 
 You can access the database GUI from https://localhost:8011
 

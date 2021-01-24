@@ -63,58 +63,13 @@
         },
         {
             "name": "[web] .NET Core Run",
-            "type": "coreclr",
+            "type": "blazorwasm",
             "request": "launch",
-            "preLaunchTask": "build-api",
+            "preLaunchTask": "build-web",
             "program": "${workspaceFolder}/artifacts/bin/Etimo.Id.Web/Debug/net5.0/Etimo.Id.Web.dll",
-            "args": [],
             "cwd": "${workspaceFolder}/src/Etimo.Id.Web",
-            "stopAtEntry": false,
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development"
-            }
-        },
-        {
-            "name": "[web] .NET Core Attach",
-            "type": "coreclr",
-            "request": "attach",
-            "processId": "${command:pickProcess}"
-        },
-        {
-            "name": "[web] .NET Core Attach Docker",
-            "type": "coreclr",
-            "request": "attach",
-            "processId": "${command:pickRemoteProcess}",
-            "sourceFileMap": {
-                "/app": "${workspaceRoot}/"
-            },
-            "pipeTransport": {
-                "pipeCwd": "${workspaceRoot}",
-                "pipeProgram": "docker",
-                "pipeArgs": [
-                    "exec",
-                    "-i",
-                    "etimo-id-web"
-                ],
-                "quoteArgs": false,
-                "debuggerPath": "/vsdbg/vsdbg"
-            }
-        },
-        {
-            "name": "[web] .NET Core WSL Launch",
-            "type": "coreclr",
-            "request": "launch",
-            "preLaunchTask": "build-api",
-            "program": "${workspaceFolder}/artifacts/bin/Etimo.Id.Web/Debug/net5.0/Etimo.Id.Web",
-            "args": [],
-            "cwd": "${workspaceFolder}/src/Etimo.Id.Web",
-            "stopAtEntry": false,
-            "console": "internalConsole",
-            "pipeTransport": {
-                "pipeCwd": "${workspaceRoot}",
-                "pipeProgram": "bash",
-                "pipeArgs": [ "-c" ],
-                "debuggerPath": "~/vsdbg/vsdbg"
             }
         }
     ]

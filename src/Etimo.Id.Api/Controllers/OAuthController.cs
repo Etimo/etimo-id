@@ -51,7 +51,7 @@ namespace Etimo.Id.Api.OAuth
         [ValidateModel]
         public IActionResult AuthenticateResourceOwner([FromQuery] AuthorizationRequestQuery query)
         {
-            Response.PreventClickjacking();
+            //Response.PreventClickjacking();
 
             string queryParams = query.ToQueryParameters();
 

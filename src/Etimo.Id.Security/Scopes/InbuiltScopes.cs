@@ -5,7 +5,9 @@ namespace Etimo.Id.Security
 {
     public class InbuiltScopes
     {
-        public static List<string> All { get => Application.Concat(AuditLog).Concat(Role).Concat(Scope).Concat(User).ToList(); }
+        public static List<string> All {
+            get => Application.Concat(AuditLog).Concat(Role).Concat(Scope).Concat(User).Concat(OpenId).ToList();
+        }
 
         public static List<string> Read {
             get
@@ -88,6 +90,15 @@ namespace Etimo.Id.Security
                     UserScopes.Read,
                     UserScopes.Write,
                     UserScopes.Admin,
+                };
+        }
+
+        public static List<string> OpenId {
+            get
+                => new()
+                {
+                    OpenIdScopes.OpenId,
+                    OpenIdScopes.Profile,
                 };
         }
     }

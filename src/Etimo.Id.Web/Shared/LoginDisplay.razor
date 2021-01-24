@@ -3,16 +3,22 @@
 @inject SignOutSessionStateManager SignOutManager
 
 <AuthorizeView>
+    <Authorizing>
+        ...
+    </Authorizing>
     <Authorized>
-        Hello, @context.User.Identity.Name!
-        <button class="nav-link btn btn-link" @onclick="BeginSignOut">Log out</button>
+        <div>
+            <a href="authentication/profile" class="username">@context.User.Identity.Name</a>
+            <button class="btn btn-link sign-out" @onclick="BeginSignOut">Sign out</button>
+        </div>
     </Authorized>
     <NotAuthorized>
-        <a href="authentication/login">Log in</a>
+        <a class="sign-in" href="authentication/register">Register</a>
+        <a class="sign-in" href="authentication/login">Log in</a>
     </NotAuthorized>
 </AuthorizeView>
 
-@code{
+@code {
 
     private async Task BeginSignOut(MouseEventArgs args)
     {

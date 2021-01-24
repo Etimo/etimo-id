@@ -1,0 +1,64 @@
+@page "/applications"
+@using Etimo.Id.Client
+@using Etimo.Id.Dtos
+@using Etimo.Id.Exceptions
+@attribute [Authorize]
+
+<h1>Applications</h1>
+
+<p>A list of applications</p>
+
+@if (_applications == null)
+{
+    <p>
+        <em>Loading...</em>
+    </p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var application in _applications)
+        {
+            <tr>
+                <td>@application.application_id</td>
+                <td>@application.name</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@code {
+
+    [Inject]
+    private IEtimoIdApplicationClient _applicationClient { get; set; }
+
+    [Inject]
+    private NavigationManager _navigationManager { get; set; }
+
+    private List<ApplicationResponseDto> _applications { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var response = await _applicationClient.GetApplicationsAsync();
+            if (response.Success)
+            {
+                _applications = response.Data;
+            }
+        }
+        catch (UnauthorizedException)
+        {
+            _navigationManager.NavigateTo("/login");
+        }
+    }
+
+}

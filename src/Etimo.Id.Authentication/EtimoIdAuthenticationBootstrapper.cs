@@ -9,10 +9,10 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Reflection;
+using System.Security.Cryptography;
 using System.Text;
 
-namespace Etimo.Id.Client
+namespace Etimo.Id.Authentication
 {
     [ExcludeFromCodeCoverage]
     public static class EtimoIdAuthentication
@@ -25,8 +25,34 @@ namespace Etimo.Id.Client
             configuration.GetSection("EtimoIdSettings").Bind(etimoIdSettings);
             services.AddSingleton(etimoIdSettings);
 
-            var assembly = Assembly.GetAssembly(typeof(OAuthController));
-            services.AddControllers().AddApplicationPart(assembly).AddControllersAsServices();
+            services.AddSingleton(RSA.Create(2048));
+            services.AddSingleton(
+                provider =>
+                {
+                    RSA rsa = services.BuildServiceProvider().GetRequiredService<RSA>();
+                    rsa.ImportRSAPublicKey(Convert.FromBase64String(etimoIdSettings.PublicKey), out int _);
+
+                    return new RsaSecurityKey(rsa);
+                });
+            services.AddSingleton<SecurityKey>(
+                provider =>
+                {
+                    if (etimoIdSettings.PublicKey != null)
+                    {
+                        // Asymmetric key -- use this when more than one apis will be communicating
+                        // with your instance of etimo id.
+                        return services.BuildServiceProvider().GetRequiredService<RsaSecurityKey>();
+                    }
+
+                    if (etimoIdSettings.Secret != null)
+                    {
+                        // Symmetric key -- use this only if you have _one_ api that will consume this
+                        // and there is no/very low risk of leaking the secret key.
+                        return new SymmetricSecurityKey(Encoding.UTF8.GetBytes(etimoIdSettings.Secret));
+                    }
+
+                    throw new Exception("Could not setup security key because both symmetric secret and asymmetric keys are missing.");
+                });
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(
@@ -36,20 +62,20 @@ namespace Etimo.Id.Client
                         options.SaveToken            = true;
                         options.TokenValidationParameters = new TokenValidationParameters
                         {
-                            ValidateActor = true,
-                            ValidateIssuer = true,
-                            ValidateAudience = true,
-                            ValidateLifetime = true,
-                            ValidateIssuerSigningKey = true,
-                            ValidIssuer = etimoIdSettings.Issuer,
-                            ValidAudience = etimoIdSettings.Issuer,
-                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(etimoIdSettings.Secret)),
-                            ClockSkew = TimeSpan.Zero,
-                            NameClaimType = CustomClaimTypes.Name,
-                            RoleClaimType = CustomClaimTypes.Role,
-                            RequireAudience = true,
-                            RequireExpirationTime = true,
-                            RequireSignedTokens = true,
+                            ValidateActor                             = true,
+                            ValidateIssuer                            = true,
+                            ValidateAudience                          = true,
+                            ValidateLifetime                          = true,
+                            ValidateIssuerSigningKey                  = true,
+                            ValidIssuer                               = etimoIdSettings.Issuer,
+                            ValidAudience                             = etimoIdSettings.Issuer,
+                            IssuerSigningKey                          = services.BuildServiceProvider().GetRequiredService<SecurityKey>(),
+                            ClockSkew                                 = TimeSpan.Zero,
+                            NameClaimType                             = CustomClaimTypes.Name,
+                            RoleClaimType                             = CustomClaimTypes.Role,
+                            RequireAudience                           = true,
+                            RequireExpirationTime                     = true,
+                            RequireSignedTokens                       = true,
                             IgnoreTrailingSlashWhenValidatingAudience = true,
                         };
                     });

@@ -84,3 +84,17 @@ void PrependToFile(string path, string content)
 
     sw.Dispose();
 }
+
+List<string> Split(string str, int chunkSize)
+{
+    var result = new List<string>();
+    var strCopy = new string(str);
+    while (strCopy.Length > chunkSize)
+    {
+        result.Add(strCopy.Substring(0, chunkSize));
+        strCopy = strCopy.Substring(chunkSize, strCopy.Length - chunkSize);
+    }
+    result.Add(strCopy);
+
+    return result;
+}

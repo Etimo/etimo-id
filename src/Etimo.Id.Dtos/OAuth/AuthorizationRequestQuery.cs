@@ -30,6 +30,13 @@ namespace Etimo.Id.Dtos
         [VsChar]
         public string state { get; set; }
 
+        [ValidValues(
+            PromptTypes.None,
+            PromptTypes.Login,
+            PromptTypes.Consent,
+            PromptTypes.SelectAccount)]
+        public string prompt { get; set; }
+
         public string ToQueryParameters()
         {
             var sb = new StringBuilder();

@@ -55,6 +55,23 @@ namespace Etimo.Id.Api.OAuth
 
             string queryParams = query.ToQueryParameters();
 
+            switch (query.prompt)
+            {
+                case PromptTypes.None:
+                    if (User.Identity.IsAuthenticated) { return Ok(); }
+                    else { throw new LoginRequiredException(); }
+
+                case PromptTypes.Login: return View("Authorize", $"/oauth2/authorize?{queryParams}");
+
+                case PromptTypes.Consent:
+                    //return View("Consent", "...");
+                    break;
+
+                case PromptTypes.SelectAccount:
+                    //return View("SelectAccount", "...");
+                    break;
+            }
+
             return View("Authorize", $"/oauth2/authorize?{queryParams}");
         }
 

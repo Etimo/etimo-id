@@ -137,3 +137,5 @@ Script | Description
 
 💡 Pro tip: create an alias for `dotnet script`, e.g. `ds` to make it easier to start scripts.<br />
 💡 Pro tip #2: use tab-completion, e.g. `ds sc<tab>a<tab>` for `scripts/add-migration.csx`
+test
+test

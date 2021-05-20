@@ -1,0 +1,24 @@
+version: '3.7'
+
+volumes:
+  db-data:
+    driver: local
+
+services:
+  etimo-id-api:
+    image: docker.pkg.github.com/etimo/etimo-id/etimo-id-api:latest
+    environment:
+      ASPNETCORE_URLS: http://+:80
+    ports:
+      - 5011:80
+
+  etimo-id-web:
+    image: docker.pkg.github.com/etimo/etimo-id/etimo-id-web:latest
+    environment:
+      ASPNETCORE_URLS: http://+:80
+      ASPNETCORE_Kestrel__Certificates__Default__Password: etimo
+      ASPNETCORE_Kestrel__Certificates__Default__Path: /etc/ssl/certs/localhost.pfx
+    ports:
+      - 5012:80
+
+secrets:

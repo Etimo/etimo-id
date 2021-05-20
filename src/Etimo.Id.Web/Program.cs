@@ -1,5 +1,4 @@
 using Etimo.Id.Client;
-using Etimo.Id.Constants;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,11 +23,7 @@ namespace Etimo.Id.Web
             builder.Services.AddTransient<IEtimoIdUserClient, EtimoIdUserClient>();
 
             builder.Services.AddOidcAuthentication(
-                options =>
-                {
-                    builder.Configuration.Bind("OidcProviderOptions", options.ProviderOptions);
-                    options.ProviderOptions.ResponseType = ResponseTypes.Code;
-                });
+                options => { builder.Configuration.Bind("OidcProviderOptions", options.ProviderOptions); });
 
             await builder.Build().RunAsync();
         }

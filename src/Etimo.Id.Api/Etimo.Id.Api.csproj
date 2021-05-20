@@ -4,6 +4,8 @@
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>Etimo.Id.Api</RootNamespace>
     <UserSecretsId>916c361f-b2ba-421e-a89a-f86f89eb49fb</UserSecretsId>
+    <OutputType>Exe</OutputType>
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
   </PropertyGroup>
 
   <ItemGroup>

@@ -10,4 +10,21 @@
   script to ensure it actually runs.
 */
 
-Run("docker-compose", $"build");
+if (Args.Any() && Args.Any(a => a == "--tag"))
+{
+  var root = GetRootPath();
+  Run($"docker", $"build -f {root}/Dockerfile-api --target prod -t etimo-id-api:latest .");
+  Run($"docker", $"build -f {root}/Dockerfile-web --target prod -t etimo-id-web:latest .");
+  Run("docker", "tag etimo-id-api:latest docker.pkg.github.com/etimo/etimo-id/etimo-id-api:latest");
+  Run("docker", "tag etimo-id-web:latest docker.pkg.github.com/etimo/etimo-id/etimo-id-web:latest");
+
+  if (Args.Any(a => a == "--push"))
+  {
+    Run("docker", "push docker.pkg.github.com/etimo/etimo-id/etimo-id-api:latest");
+    Run("docker", "push docker.pkg.github.com/etimo/etimo-id/etimo-id-web:latest");
+  }
+}
+else
+{
+  Run("docker-compose", $"build");
+}

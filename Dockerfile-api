@@ -32,7 +32,7 @@ ENV DOTNET_USE_POLLING_FILE_WATCHER 1
 CMD dotnet watch --project ./src/Etimo.Id.Api run --no-restore
 
 FROM base as build
-RUN dotnet build \
+RUN dotnet publish \
     --configuration Release \
     --no-restore \
     --output ./out \

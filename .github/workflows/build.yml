@@ -26,7 +26,8 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
       - name: build image
-        uses: docker/build-push-action@v1
+        run: docker build -t etimo/etimo-id/etimo-id-web:latest
+        docker/build-push-action@v1
         with:
           dockerfile: ./Dockerfile-web
           target: prod

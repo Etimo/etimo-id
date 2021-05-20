@@ -15,7 +15,7 @@ namespace Etimo.Id.Dtos
     public class AuthorizationRequestQuery
     {
         [Required]
-        [ValidValues(ResponseTypes.Code, ResponseTypes.Token)]
+        [ValidValues(ResponseTypes.Code, ResponseTypes.Token, ResponseTypes.IdToken)]
         public string response_type { get; set; }
 
         [Required]
@@ -30,6 +30,9 @@ namespace Etimo.Id.Dtos
         [VsChar]
         public string state { get; set; }
 
+        [NqChar]
+        public string nonce { get; set; }
+
         public string ToQueryParameters()
         {
             var sb = new StringBuilder();
@@ -39,7 +42,7 @@ namespace Etimo.Id.Dtos
 
             if (scope != null) { sb.Append($"scope={scope}&"); }
 
-            if (state != null) { sb.Append($"state={state}&"); }
+            if (nonce != null) { sb.Append($"nonce={nonce}&"); }
 
             return sb.ToString().Trim('&');
         }

@@ -11,5 +11,6 @@ namespace Etimo.Id.Entities.Abstractions
         string       Username        { get; }
         string       Scope           { get; }
         int          LifetimeMinutes { get; }
+        string       Nonce           { get; }
     }
 }

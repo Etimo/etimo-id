@@ -47,7 +47,14 @@ namespace Etimo.Id.Service.TokenGenerators
 
                 // https://openid.net/specs/openid-connect-core-1_0.html#StandardClaims
                 new(OpenIdConnectClaimTypes.PreferredUsername, request.Username),
+                new(IdTokenClaimTypes.AuthTime, GetUnixTime(DateTime.UtcNow).ToString(), ClaimValueTypes.Integer32),
             };
+
+            // https://openid.net/specs/openid-connect-core-1_0.html#IDToken
+            if (request.Nonce != null)
+            {
+                claims.Add(new Claim(IdTokenClaimTypes.Nonce, GetUnixTime(DateTime.UtcNow).ToString(), ClaimValueTypes.Integer32));
+            }
 
             // https://tools.ietf.org/html/rfc7519#section-4.2
             List<Role> roles = await _getRolesService.GetByUserIdAsync(new Guid(request.Subject));

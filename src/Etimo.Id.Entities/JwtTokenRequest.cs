@@ -12,5 +12,6 @@ namespace Etimo.Id.Entities
         public string       Username        { get; set; }
         public string       Scope           { get; set; }
         public int          LifetimeMinutes { get; set; }
+        public string       Nonce           { get; set; }
     }
 }

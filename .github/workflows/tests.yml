@@ -2,9 +2,9 @@ name: Tests
 
 on:
   push:
-    branches: [ develop ]
+    branches: [develop]
   pull_request:
-    branches: [ develop ]
+    branches: [develop]
 
 jobs:
   run_tests:
@@ -18,7 +18,7 @@ jobs:
       - name: setup dotnet
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: 5.0.x
+          dotnet-version: 6.0.x
       - run: dotnet restore $SOLUTION_FILE
       - name: dotnet build
         run: dotnet build $SOLUTION_FILE --configuration Release --no-restore
@@ -28,7 +28,7 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          file: "**/coverage.cobertura.xml"
+          file: '**/coverage.cobertura.xml'
           flags: unittests
           name: codecov-umbrella
           fail_ci_if_error: true

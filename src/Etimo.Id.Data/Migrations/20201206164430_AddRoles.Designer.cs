@@ -19,7 +19,7 @@ namespace Etimo.Id.Data.Migrations
             modelBuilder
                 .UseIdentityByDefaultColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
-                .HasAnnotation("ProductVersion", "5.0.0");
+                .HasAnnotation("ProductVersion", "6.0.0");
 
             modelBuilder.Entity("Etimo.Id.Entities.AccessToken", b =>
                 {

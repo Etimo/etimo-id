@@ -17,6 +17,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Serilog;
+using System.Text.Json.Serialization;
 
 namespace Etimo.Id.Api
 {
@@ -141,8 +142,8 @@ namespace Etimo.Id.Api
                 .AddJsonOptions(
                     options =>
                     {
-                        options.JsonSerializerOptions.PropertyNamingPolicy = SnakeCaseNamingPolicy.Instance;
-                        options.JsonSerializerOptions.IgnoreNullValues     = true;
+                        options.JsonSerializerOptions.PropertyNamingPolicy   = SnakeCaseNamingPolicy.Instance;
+                        options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
                     })
                 .AddRazorRuntimeCompilation();
         }

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Etimo.Id.Api.Errors
@@ -49,8 +50,8 @@ namespace Etimo.Id.Api.Errors
                         response,
                         new JsonSerializerOptions
                         {
-                            PropertyNamingPolicy = SnakeCaseNamingPolicy.Instance,
-                            IgnoreNullValues     = true,
+                            PropertyNamingPolicy   = SnakeCaseNamingPolicy.Instance,
+                            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
                         }));
             }
         }
